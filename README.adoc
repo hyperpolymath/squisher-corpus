@@ -1,0 +1,77 @@
+= squisher-corpus
+:toc:
+:toc-placement!:
+
+Empirical schema corpus for protocol-squisher. Crawls GitHub for real-world schema files, analyzes them with protocol-squisher's `corpus-analyze` subcommand, stores results in SQLite, and mines patterns for empirical compatibility data.
+
+toc::[]
+
+== Architecture
+
+[source]
+----
+GitHub Code Search → Fetch Raw → protocol-squisher corpus-analyze → SQLite → Pattern Mining → Hypatia
+----
+
+=== Pipeline Stages (Oban Workers)
+
+1. **SearchWorker** — GitHub code search for schema files by format
+2. **FetchWorker** — Download raw file content, deduplicate by SHA
+3. **AnalyzeWorker** — Run `protocol-squisher corpus-analyze` via System.cmd
+4. **MineWorker** — Cross-schema pattern detection
+5. **SyncWorker** — Export patterns as Logtalk facts for Hypatia
+
+== Supported Formats
+
+|===
+| Format | Search Pattern | Extension
+
+| Protobuf | `syntax = "proto3"` | `.proto`
+| Avro | `type record` | `.avsc`
+| Thrift | `struct` | `.thrift`
+| Cap'n Proto | `struct.*@0x` | `.capnp`
+| FlatBuffers | `table` | `.fbs`
+| JSON Schema | `$schema` | `.json`
+| Pydantic | `class.*BaseModel` | `.py`
+| Serde | `#[derive(Serialize` | `.rs`
+| MessagePack | msgpack definitions | `.msgpack`
+| GraphQL | `type Query` | `.graphql`
+| OpenAPI | `openapi:` | `.yaml`
+|===
+
+== Quick Start
+
+[source,bash]
+----
+# Install dependencies
+mix deps.get
+
+# Create and migrate database
+mix ecto.create
+mix ecto.migrate
+
+# Seed initial search queries
+mix run scripts/seed_searches.exs
+
+# Start the application (pipeline runs via Oban)
+iex -S mix
+----
+
+== Exports
+
+* `exports/corpus_statistics.json` — Aggregate corpus statistics
+* `exports/pattern_catalog.json` — Discovered patterns with confidence scores
+* `exports/type_frequency.json` — Empirical type frequency data
+* `exports/hypatia_facts.lgt` — Logtalk facts for Hypatia learning engine
+
+== Prerequisites
+
+* Elixir ~> 1.16
+* `protocol-squisher` CLI on PATH (with `corpus-analyze` subcommand)
+* GitHub personal access token (set `GITHUB_TOKEN` env var)
+
+== License
+
+SPDX-License-Identifier: PMPL-1.0-or-later
+
+Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <jonathan.jewell@open.ac.uk>
