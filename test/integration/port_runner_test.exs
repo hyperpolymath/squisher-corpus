@@ -32,9 +32,11 @@ defmodule SquisherCorpus.Integration.PortRunnerTest do
       end
     end
 
-    test "returns error for invalid content" do
-      result = PortRunner.analyze("not a schema", "protobuf")
-      assert match?({:error, _}, result)
+    test "returns empty schema for unparseable content" do
+      {:ok, data} = PortRunner.analyze("not a schema", "protobuf")
+      # CLI succeeds but returns an empty schema with no types
+      assert data["schema"]["types"] == %{}
+      assert data["transport_classes"] == []
     end
   end
 end

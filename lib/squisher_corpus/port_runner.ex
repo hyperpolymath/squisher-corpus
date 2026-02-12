@@ -43,17 +43,22 @@ defmodule SquisherCorpus.PortRunner do
   defp run_command(bin, path, format, timeout) do
     args = ["corpus-analyze", "--input", path, "--format", format]
 
-    try do
-      case System.cmd(bin, args, stderr_to_stdout: true, timeout: timeout) do
-        {output, 0} -> {:ok, output}
-        {output, code} -> {:error, {:exit_code, code, output}}
-      end
-    rescue
-      e in ErlangError ->
-        {:error, {:system_cmd_failed, Exception.message(e)}}
-    catch
-      :exit, reason ->
-        {:error, {:timeout_or_crash, reason}}
+    task =
+      Task.async(fn ->
+        try do
+          case System.cmd(bin, args, stderr_to_stdout: true) do
+            {output, 0} -> {:ok, output}
+            {output, code} -> {:error, {:exit_code, code, output}}
+          end
+        rescue
+          e in ErlangError ->
+            {:error, {:system_cmd_failed, Exception.message(e)}}
+        end
+      end)
+
+    case Task.yield(task, timeout) || Task.shutdown(task, :brutal_kill) do
+      {:ok, result} -> result
+      nil -> {:error, :timeout}
     end
   end
 
