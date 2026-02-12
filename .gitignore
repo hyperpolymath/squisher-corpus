@@ -31,6 +31,11 @@ Thumbs.db
 /doc/
 *.ez
 erl_crash.dump
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+/mix.lock
 
 # Julia
 *.jl.cov
@@ -72,6 +77,10 @@ htmlcov/
 # Logs
 *.log
 /logs/
+
+# Exports (generated)
+/exports/*.json
+/exports/*.lgt
 
 # Temp
 /tmp/
