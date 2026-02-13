@@ -21,6 +21,18 @@ GitHub Code Search → Fetch Raw → protocol-squisher corpus-analyze → SQLite
 4. **MineWorker** — Cross-schema pattern detection
 5. **SyncWorker** — Export patterns as Logtalk facts for Hypatia
 
+=== Composer (Gleam Orchestration)
+
+|===
+| Component | Language | Modules | Completion
+
+| Contract Types | Gleam | 8 | 30%
+| Pipeline Engine | Gleam | 3 | 30%
+| Tests | Gleam | 22 | 30%
+|===
+
+Build: `cd composer && gleam build && gleam test`
+
 == Supported Formats
 
 |===

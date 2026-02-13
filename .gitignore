@@ -82,6 +82,13 @@ htmlcov/
 /exports/*.json
 /exports/*.lgt
 
+# Gleam build artifacts
+composer/build/
+composer/*.beam
+
+# Crash recovery artifacts
+ai-cli-crash-capture/
+
 # Temp
 /tmp/
 *.tmp

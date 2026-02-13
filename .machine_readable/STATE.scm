@@ -7,24 +7,28 @@
     (version "0.1.0")
     (schema-version "1.0.0")
     (created "2026-02-12")
-    (updated "2026-02-12")
+    (updated "2026-02-13")
     (project "squisher-corpus")
     (repo "hyperpolymath/squisher-corpus"))
 
   (project-context
     (name "squisher-corpus")
     (tagline "Empirical schema corpus for protocol-squisher pattern mining")
-    (tech-stack ("elixir" "oban" "ecto" "sqlite")))
+    (tech-stack ("elixir" "oban" "ecto" "sqlite" "gleam")))
 
   (current-position
     (phase "implementation")
-    (overall-completion 10)
+    (overall-completion 30)
     (components
       (("pipeline" . 0)
        ("mining" . 0)
        ("database" . 0)
-       ("export" . 0)))
-    (working-features ()))
+       ("export" . 0)
+       ("composer" . 30)))
+    (working-features
+      ("composer-contract-types"
+       "composer-pipeline-orchestration"
+       "composer-bundler")))
 
   (route-to-mvp
     (milestones
@@ -60,16 +64,21 @@
 
   (critical-next-actions
     (immediate
-      "Create Mix project structure"
-      "Define Ecto schemas and migrations")
+      "Implement full JSON decoders for all 8 contract types"
+      "Wire real shell execution in runner.gleam (panic-attack, clinician, observatory)")
     (this-week
-      "Implement all 5 pipeline workers"
-      "Add pattern mining module")
+      "BEAM interop: call Gleam composer from Elixir Observatory"
+      "Create Mix project structure for Elixir pipeline workers"
+      "Define Ecto schemas and migrations")
     (this-month
+      "Implement all 5 Oban pipeline workers"
       "Run corpus collection on GitHub"
       "Generate first empirical dataset"))
 
-  (session-history ()))
+  (session-history
+    ("2026-02-13: Gleam composer engine — 8 contract types, pipeline, bundler, runner, 22 tests"
+     "2026-02-13: Fixed within-package imports (bare paths, not package-prefixed)"
+     "2026-02-13: contracts/WIRING.md tracking cross-language schema status")))
 
 ;; Helper functions
 (define (get-completion-percentage state)

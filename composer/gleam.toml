@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: PMPL-1.0-or-later
+# Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <jonathan.jewell@open.ac.uk>
+
+name = "composer"
+version = "0.1.0"
+target = "erlang"
+
+description = "Gleam orchestration engine for squisher-corpus contract wiring and pipeline execution"
+# Actual license: PMPL-1.0-or-later (see LICENSE file)
+# MPL-2.0 used here as SPDX-compatible fallback per project policy
+licences = ["MPL-2.0"]
+repository = { type = "github", user = "hyperpolymath", repo = "squisher-corpus" }
+
+[dependencies]
+gleam_stdlib = ">= 0.44.0 and < 2.0.0"
+gleam_json = ">= 3.0.1 and < 4.0.0"
+gleam_erlang = ">= 1.0.0 and < 2.0.0"
+
+[dev-dependencies]
+gleeunit = ">= 1.0.0 and < 2.0.0"
