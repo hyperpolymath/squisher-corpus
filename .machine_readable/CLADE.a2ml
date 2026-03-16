@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: PMPL-1.0-or-later
+# Clade declaration — part of the gv-clade-index registry
+# See: https://github.com/hyperpolymath/gv-clade-index
+
+[identity]
+uuid = "e8bfbb2c-d734-534c-bad6-b32d663c33e5"
+primary-forge = "github"
+primary-owner = "hyperpolymath"
+canonical-name = "squisher-corpus"
+prefixed-name = "pt-squisher-corpus"
+
+[clade]
+primary = "pt"
+secondary = []
+assigned = "2026-03-16"
+rationale = ""
+
+[forges]
+github = "hyperpolymath/squisher-corpus"
+gitlab = "hyperpolymath/squisher-corpus"
+bitbucket = "hyperpolymath/squisher-corpus"
+
+[lineage]
+type = "standalone"
+parent = "Test corpus for protocol-squisher"
+born = "2026-03-16"
